@@ -33,6 +33,7 @@ use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBagInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\Routing\Annotation\Route;
+use \Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @Route("/asset")
@@ -1134,7 +1135,7 @@ class AssetController extends ElementControllerBase implements EventedController
         $image = Asset\Image::getById(intval($request->get('id')));
 
         if ($image === NULL)
-            throw new \Exception("Invalid image ID");
+            throw new NotFoundHttpException("Invalid image ID");
 
         if (!$image->isAllowed('view')) {
             throw new \Exception('not allowed to view thumbnail');
